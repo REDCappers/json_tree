@@ -17,8 +17,7 @@ class Application(tk.Frame):
         super().__init__(master)
         self.pack()
 
-        self.master.minsize(width=600, height=240)
-        self.master.maxsize(width=600, height=240)
+        self.master.minsize(width=700, height=240
         self.master.title("Json Tree Generator")
 
         self.create_widgets()
@@ -33,7 +32,7 @@ class Application(tk.Frame):
         # 三行目
         container_3 = ttk.Frame(self)
         container_3.pack(fill=X, expand=YES, pady=5)
-        # 三行目
+        # 四行目
         container_4 = ttk.Frame(self)
         container_4.pack(fill=X, expand=YES, pady=5)
 
