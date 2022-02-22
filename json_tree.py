@@ -85,7 +85,7 @@ def border_draw_list_start(row, start, end):
 
 def json_tree(data, retsu=1):
     """
-    JSONを階層構造にintendを行う
+    JSONを階層構造にindentを行う
     :param data:
     :param retsu:
     :return:
