@@ -21,9 +21,6 @@ class Application(tk.Frame):
         self.master.maxsize(width=600, height=240)
         self.master.title("Json Tree Generator")
 
-        print(pathlib.Path(__file__).parent.absolute())
-        self.folder_image = ttk.PhotoImage(name='folder_image', file='./open_folder.png')
-
         self.create_widgets()
 
     def create_widgets(self):
@@ -51,7 +48,7 @@ class Application(tk.Frame):
 
         # jsonファイル参照ボタン
         self.json_filesearch_button = ttk.Button(master=container_1,
-                                                 image='folder_image',
+                                                 text='ファイル参照',
                                                  command=self.on_json_filepath_browse)
         self.json_filesearch_button.configure()
         self.json_filesearch_button.pack(padx=5, pady=10)
