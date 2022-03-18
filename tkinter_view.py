@@ -117,10 +117,10 @@ class Application(tk.Frame):
                 if not excel_path.endswith('.xlsx'):
                     excel_path += '.xlsx'
 
-                    json_tree.main(self.json_filepath_entry.get(),
-                                   excel_path,
-                                   self.excel_last_color_toggle_bool.get(),
-                                   self.excel_open_bool.get())
+                json_tree.main(self.json_filepath_entry.get(),
+                               excel_path,
+                               self.excel_last_color_toggle_bool.get(),
+                               self.excel_open_bool.get())
         except FileNotFoundError:
             Messagebox.show_error('JSONファイルが見つかりません', title='FileNotFoundError', parent=None)
 
