@@ -3,12 +3,10 @@ from json import JSONDecodeError
 from tkinter import filedialog
 
 import ttkbootstrap as ttk
-import ttkbootstrap.dialogs
 from ttkbootstrap.constants import *
 from ttkbootstrap.dialogs import Messagebox
 
 import json_tree
-import pathlib
 
 
 class Application(tk.Frame):
@@ -17,7 +15,7 @@ class Application(tk.Frame):
         super().__init__(master)
         self.pack()
 
-        self.master.minsize(width=700, height=240
+        self.master.minsize(width=700, height=240)
         self.master.title("Json Tree Generator")
 
         self.create_widgets()
@@ -32,7 +30,7 @@ class Application(tk.Frame):
         # 三行目
         container_3 = ttk.Frame(self)
         container_3.pack(fill=X, expand=YES, pady=5)
-        # 四行目
+        # 三行目
         container_4 = ttk.Frame(self)
         container_4.pack(fill=X, expand=YES, pady=5)
 
@@ -98,26 +96,36 @@ class Application(tk.Frame):
         ファイル出力
         :return:
         """
-        if len(self.json_filepath_entry.get()) == 0:
-            Messagebox.show_warning('JSONファイルのパスを指定してください.', title=' ', parent=None)
-            return
+        try:
+            if len(self.json_filepath_entry.get()) == 0:
+                Messagebox.show_warning('JSONファイルのパスを指定してください.', title=' ', parent=None)
+                return
 
-        f_type = [('Excel', '*.xlsx')]
-        excel_path = filedialog.asksaveasfilename(filetype=f_type)
+            # FileNotFoundErrorを発生させる構文.
+            f = open(self.json_filepath_entry.get())
+            f.close()
 
-        if excel_path:
-            if not excel_path.endswith('.xlsx'):
-                excel_path += '.xlsx'
+            f_type = [('Excel', '*.xlsx')]
 
-            try:
-                json_tree.main(self.json_filepath_entry.get(),
-                               excel_path,
-                               self.excel_last_color_toggle_bool.get(),
-                               self.excel_open_bool.get())
-            except FileNotFoundError:
-                Messagebox.show_error('JSONファイルが見つかりません', title='FileNotFoundError', parent=None)
-            except JSONDecodeError:
-                Messagebox.show_error('JSONファイルとして読み取ることができませんでした', title='JSONDecodeError', parent=None)
+            json_filename = self.json_filepath_entry.get().split('/')[-1]
+            if json_filename.endswith('.json'):
+                json_filename = json_filename.replace('.json', '.xlsx')
+
+            excel_path = filedialog.asksaveasfilename(filetype=f_type, initialfile=json_filename)
+
+            if excel_path:
+                if not excel_path.endswith('.xlsx'):
+                    excel_path += '.xlsx'
+
+                    json_tree.main(self.json_filepath_entry.get(),
+                                   excel_path,
+                                   self.excel_last_color_toggle_bool.get(),
+                                   self.excel_open_bool.get())
+        except FileNotFoundError:
+            Messagebox.show_error('JSONファイルが見つかりません', title='FileNotFoundError', parent=None)
+
+        except JSONDecodeError:
+            Messagebox.show_error('JSONファイルとして読み取ることができませんでした', title='JSONDecodeError', parent=None)
 
 
 def start_point():
